@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>認識自己 — MunQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #F5F3EF; --ink: #1A1A18; --muted: #9A9690; --accent: #C8B89A; --line: #E2DFDA; --card: #FAFAF8; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1.7; min-height: 100vh; cursor: none; }
+  .cursor { position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.15s ease, opacity 0.15s ease; transform: translate(-50%, -50%); }
+  .cursor.hover { transform: translate(-50%, -50%) scale(3); opacity: 0.3; }
+  .page { max-width: 600px; margin: 0 auto; padding: 64px 32px 120px; }
+  .nav { display: flex; align-items: center; gap: 12px; margin-bottom: 64px; opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .nav-back { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; cursor: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--ink); }
+  .nav-sep { color: var(--line); }
+  .nav-current { font-size: 11px; color: var(--muted); }
+  .progress-wrap { margin-bottom: 40px; opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards; }
+  .progress-bar { height: 1px; background: var(--line); margin-bottom: 12px; }
+  .progress-fill { height: 100%; background: var(--ink); transition: width 0.4s ease; }
+  .progress-dots { display: flex; gap: 8px; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--line); transition: background 0.2s; }
+  .dot.active { background: var(--ink); }
+  .dot.done { background: var(--accent); }
+  .phase-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 16px; }
+  .question-card { border: 1px solid var(--line); background: var(--card); padding: 28px 32px; margin-bottom: 24px; }
+  .q-num { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 12px; }
+  .q-text { font-family: 'DM Serif Display', serif; font-size: 22px; line-height: 1.4; color: var(--ink); }
+  .q-hint { font-size: 12px; color: var(--muted); margin-top: 10px; }
+  textarea { width: 100%; min-height: 100px; font-family: 'DM Mono', monospace; font-size: 12px; padding: 14px 16px; border: 1px solid var(--line); background: var(--card); color: var(--ink); outline: none; resize: none; transition: border-color 0.2s; line-height: 1.7; margin-bottom: 16px; }
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: var(--muted); }
+  .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 10px 20px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: none; transition: background 0.2s, color 0.2s; }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn-ghost { border-color: var(--line); color: var(--muted); }
+  .btn-ghost:hover { background: var(--line); color: var(--ink); }
+  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 40px 0 16px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .summary-text { font-family: 'DM Serif Display', serif; font-size: 20px; line-height: 1.6; color: var(--ink); margin-bottom: 20px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .tag { font-size: 11px; padding: 4px 12px; border: 1px solid var(--line); color: var(--muted); }
+  .need-card { border: 1px solid var(--line); background: var(--card); padding: 20px 24px; margin-bottom: 10px; }
+  .need-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .need-text { font-size: 13px; color: var(--ink); line-height: 1.7; }
+  .answer-item { border-left: 2px solid var(--line); padding: 10px 16px; margin-bottom: 12px; }
+  .answer-q { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+  .answer-a { font-size: 13px; color: var(--ink); line-height: 1.6; }
+  footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; display: flex; justify-content: space-between; }
+  footer a { color: var(--muted); text-decoration: none; cursor: none; transition: color 0.2s; }
+  footer a:hover { color: var(--ink); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) { .page { padding: 40px 20px 80px; } .q-text { font-size: 18px; } }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="page">
+  <nav class="nav">
+    <a class="nav-back" href="index.html">← MunQ</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">認識自己</span>
+  </nav>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-dots" id="dots"></div>
+  </div>
+  <div id="main"></div>
+  <footer>
+    <span>© 2025 MunQ</span>
+    <a href="index.html">← 返回主頁</a>
+  </footer>
+</div>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => { cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
+function rebindCursor() {
+  document.querySelectorAll('button,a,textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+const questions = [
+  { phase: "現在的你", q: "你現在最常在做什麼？", hint: "不用想太多，就是日常最佔你時間的事。" },
+  { phase: "現在的你", q: "你上一次感覺「對，這就是我想做的事」是什麼時候？", hint: "可以是很小的事。" },
+  { phase: "你在乎什麼", q: "你最不能接受別人對你說的一句話是什麼？", hint: "那句話觸碰到你最在乎的東西。" },
+  { phase: "你在乎什麼", q: "如果你明天消失了，你希望別人記得你什麼？", hint: "不一定要很偉大。" },
+  { phase: "你想要什麼", q: "你有沒有一件事，一直想做但一直沒做？", hint: "說出來，不評判。" },
+  { phase: "你想要什麼", q: "你理想中的一天長什麼樣子？從起床到睡覺。", hint: "盡量具體。" },
+  { phase: "你是誰", q: "你覺得自己跟大部分人最不一樣的地方是什麼？", hint: "可以是優點，也可以是缺點。" },
+  { phase: "你是誰", q: "完成這些問題之後，你對自己有什麼新的發現？", hint: "哪怕只有一點點。" },
+];
+
+let current = 0, answers = [], drafts = {};
+
+function renderDots() {
+  document.getElementById('dots').innerHTML = questions.map((_,i) =>
+    `<div class="dot ${i<current?'done':i===current?'active':''}"></div>`
+  ).join('');
+}
+function renderProgress() {
+  document.getElementById('prog').style.width = (current/questions.length*100)+'%';
+}
+function renderQuestion() {
+  if (current >= questions.length) { renderResult(); return; }
+  const q = questions[current];
+  document.getElementById('main').innerHTML = `
+    <div class="phase-tag">${q.phase}</div>
+    <div class="question-card">
+      <div class="q-num">${current+1} / ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
+    </div>
+    <textarea id="ans" placeholder="在這裡寫下你的答案...">${drafts[current]||''}</textarea>
+    <div class="btn-row">
+      <button class="btn" onclick="next()">繼續 →</button>
+      ${current>0?`<button class="btn btn-ghost" onclick="back()">← 上一題</button>`:''}
+      <button class="btn btn-ghost" onclick="skip()">跳過</button>
+    </div>
+  `;
+  const ta = document.getElementById('ans');
+  ta.addEventListener('input', () => { drafts[current] = ta.value; });
+  ta.focus();
+  rebindCursor();
+}
+function next() { answers[current]=(document.getElementById('ans').value||'').trim()||null; current++; renderProgress(); renderDots(); renderQuestion(); }
+function skip() { answers[current]=null; current++; renderProgress(); renderDots(); renderQuestion(); }
+function back() { current--; renderProgress(); renderDots(); renderQuestion(); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function extractKeywords(text) {
+  const stop = new Set(['我','你','是','的','了','在','有','這','那','也','都','不','就','一','個','很','但','和','或','什麼','因為','所以','覺得','想','會','要','可以','沒有','時候','自己','如果','一個','還是','只是','其實','應該','然後','而且','一直','就是','可能','需要']);
+  const words = text.split(/[\s，。！？、：；「」\n]/g).filter(w => w.length>=2 && !stop.has(w));
+  const freq = {};
+  words.forEach(w => { freq[w]=(freq[w]||0)+1; });
+  return Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(e=>e[0]).slice(0,8);
+}
+
+function deriveSummary(text) {
+  const c = /音樂|創作|寫|做|設計/.test(text);
+  const l = /學習|練習|進步|成長|鋼琴|英文/.test(text);
+  const r = /早起|冥想|運動|規律|彈性/.test(text);
+  const f = /感覺|情緒|溫暖|平靜|快樂|幸福/.test(text);
+  if (c&&r) return '你是一個需要穩定節奏才能把最好的東西做出來的創作者，你在乎真實性多過於認可。';
+  if (c&&l) return '你是一個不斷在學習的創作者，你做的東西必須是真正屬於你的，不然沒有意義。';
+  if (c&&f) return '你用創作來處理那些說不出口的感受，做出來的東西是你跟世界溝通的方式。';
+  if (l) return '你是一個把成長當作生活重心的人，你需要持續前進才會感覺自己活著。';
+  return '你是一個清楚自己想要什麼的人，正在把想法變成現實的路上。';
+}
+
+function deriveNeeds(text) {
+  const needs = [];
+  if (/音樂|創作|早起|冥想|運動|彈性/.test(text))
+    needs.push({ label: '時間彈性的生活方式', text: '你需要大塊完整的時間做自己的事，碎片化的行程對你是消耗。能自己掌控時間的工作或生活方式，才能讓你發揮最好的狀態。' });
+  needs.push({ label: '話不多但真的在乎你的人', text: '不是需要一直有人陪，而是需要有人在你需要的時候出現。那個人不用說很多，但要讓你感覺被理解、被接住。' });
+  if (/音樂|創作|寫|做/.test(text))
+    needs.push({ label: '一個讓作品被看見的出口', text: '光是做出來還不夠，你還需要有人感受到它。不然創作會慢慢變成只是對自己說話，久了會空。' });
+  if (/冥想|平靜|穩定|安靜|運動/.test(text))
+    needs.push({ label: '一個讓自己安定下來的儀式', text: '你知道自己在好狀態的時候能做出什麼，所以你需要一套讓自己回到好狀態的方式——讓頭腦清楚，讓心安靜下來。' });
+  if (!needs.length)
+    needs.push({ label: '一件每天讓你有理由起床的事', text: '你需要一個清楚的方向，讓每天的行動都感覺有意義，不只是在過日子。' });
+  return needs.slice(0,3);
+}
+
+function renderResult() {
+  document.getElementById('prog').style.width = '100%';
+  renderDots();
+  const filled = questions.map((q,i)=>({q:q.q,a:answers[i]})).filter(x=>x.a);
+  const allText = filled.map(x=>x.a).join(' ');
+  const summary = deriveSummary(allText);
+  const needs = deriveNeeds(allText);
+  const keywords = extractKeywords(allText);
+  document.getElementById('main').innerHTML = `
+    <div class="section-label">你是誰</div>
+    <div class="summary-text">${summary}</div>
+    ${keywords.length ? `<div class="tag-row">${keywords.map(k=>`<span class="tag">${k}</span>`).join('')}</div>` : ''}
+    <div class="section-label">因此你可能需要</div>
+    ${needs.map(n=>`
+      <div class="need-card">
+        <div class="need-label">${n.label}</div>
+        <div class="need-text">${n.text}</div>
+      </div>
+    `).join('')}
+    <div class="section-label">你說的話</div>
+    ${filled.map(x=>`
+      <div class="answer-item">
+        <div class="answer-q">${x.q}</div>
+        <div class="answer-a">${esc(x.a)}</div>
+      </div>
+    `).join('')}
+    <div class="btn-row" style="margin-top:2rem;">
+      <button class="btn" onclick="restart()">重新來過</button>
+    </div>
+  `;
+  rebindCursor();
+}
+
+function restart() { current=0; answers=[]; drafts={}; renderProgress(); renderDots(); renderQuestion(); }
+renderDots(); renderQuestion();
+</script>
+</body>
+</html>
