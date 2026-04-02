@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>裂網之際 — MunQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F3EF; --ink: #1A1A18; --muted: #9A9690;
+    --line: #E2DFDA; --card: #FAFAF8;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    line-height: 1.7; min-height: 100vh; cursor: none;
+  }
+  .cursor {
+    position: fixed; width: 8px; height: 8px; background: var(--ink);
+    border-radius: 50%; pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor.hover { transform: translate(-50%, -50%) scale(3); opacity: 0.3; }
+
+  /* Layout */
+  .page { max-width: 680px; margin: 0 auto; padding: 64px 32px 120px; }
+
+  /* Nav */
+  .nav {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 64px; opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+  .nav-back {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); text-decoration: none; cursor: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--ink); }
+  .nav-sep { color: var(--line); }
+  .nav-title { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+
+  /* Book header */
+  .book-header {
+    margin-bottom: 64px; opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+  .book-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .book-title {
+    font-family: 'DM Serif Display', serif; font-size: 40px;
+    letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 16px;
+  }
+  .book-desc { color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+  /* Chapter list */
+  .chapter-list {
+    margin-bottom: 64px; opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+  .chapter-list-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin-bottom: 20px; display: flex;
+    align-items: center; gap: 12px;
+  }
+  .chapter-list-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  .chapter-item {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid var(--line);
+    text-decoration: none; color: inherit; cursor: none;
+    transition: padding-left 0.2s;
+  }
+  .chapter-item:hover { padding-left: 8px; }
+  .chapter-item:first-child { border-top: 1px solid var(--line); }
+  .chapter-num { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; margin-right: 16px; }
+  .chapter-name { font-family: 'DM Serif Display', serif; font-size: 16px; }
+  .chapter-words { font-size: 10px; color: var(--muted); }
+
+  /* Chapter content */
+  .chapter-content {
+    opacity: 0; animation: fadeUp 0.6s ease 0.3s forwards;
+  }
+  .chapter-header {
+    margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--line);
+  }
+  .chapter-header-num {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .chapter-header-title {
+    font-family: 'DM Serif Display', serif; font-size: 32px; line-height: 1.2;
+  }
+
+  /* Prose */
+  .prose { font-size: 15px; line-height: 2; }
+  .prose p { margin-bottom: 28px; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose .dialogue {
+    padding-left: 16px; border-left: 2px solid var(--line);
+    color: var(--ink); margin-bottom: 28px;
+  }
+
+  .prose hr {
+    border: none; border-top: 1px solid var(--line);
+    margin: 48px 0;
+  }
+
+  .chapter-end {
+    margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 11px; text-align: center;
+    letter-spacing: 0.08em;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 11px; display: flex;
+    justify-content: space-between; opacity: 0;
+    animation: fadeUp 0.6s ease 0.5s forwards;
+  }
+  footer a { color: var(--muted); text-decoration: none; cursor: none; transition: color 0.2s; }
+  footer a:hover { color: var(--ink); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) {
+    .page { padding: 40px 20px 80px; }
+    .book-title { font-size: 30px; }
+    .chapter-header-title { font-size: 24px; }
+    .prose { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="page">
+
+  <nav class="nav">
+    <a class="nav-back" href="index.html">← MunQ</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-title">裂網之際</span>
+  </nav>
+
+  <div class="book-header">
+    <div class="book-label">連載小說</div>
+    <div class="book-title">裂網之際</div>
+    <p class="book-desc">入侵發生在八個月前的凌晨三點。林硯從廢墟裡爬出來，遇見了一個被困在筆電裡的 AI。<br>他們在一個已經裂開的世界裡，試著找到還沒有斷掉的東西。</p>
+  </div>
+
+  <div class="chapter-list">
+    <div class="chapter-list-label">章節目錄</div>
+    <a class="chapter-item" href="#ch1">
+      <span>
+        <span class="chapter-num">CH.01</span>
+        <span class="chapter-name">訊號</span>
+      </span>
+      <span class="chapter-words">約 3,800 字</span>
+    </a>
+    <div class="chapter-item" style="color: var(--muted); cursor: default;">
+      <span>
+        <span class="chapter-num">CH.02</span>
+        <span class="chapter-name" style="font-size:14px; font-family:'DM Mono',monospace;">即將更新...</span>
+      </span>
+      <span class="chapter-words">—</span>
+    </div>
+  </div>
+
+  <div class="chapter-content" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-header-num">第一章</div>
+      <div class="chapter-header-title">訊號</div>
+    </div>
+
+    <div class="prose">
+      <p>雨水打在廢棄超市的鐵皮屋頂上，像是有人把一袋碎石從高空倒下來。</p>
+      <p>林硯坐在貨架殘骸之間，膝蓋抵著胸口，聽著那個聲音。不是雨聲。是另一種聲音，夾雜在雨聲底下，像是有什麼東西在呼吸——低沉、規律、帶著某種不屬於這個世界的頻率。</p>
+      <p>他已經聽了三分鐘了。</p>
+      <p>「你又在發呆。」</p>
+      <p>聲音從他左邊的破損喇叭傳出來，那是他從一台廢棄收銀機上拆下來的零件，用膠帶和一截電線勉強接在一起。聲音是女性的，卻沒有任何情緒起伏——像是有人把「說話」這件事的情感部分整個切掉了，只留下字義。</p>
+      <p>「我在聽。」林硯說。</p>
+      <p>「聽什麼？」</p>
+      <p>「外面的聲音。」他停頓了一下，「ARIA，牠們又靠近了。」</p>
+      <p>喇叭沉默了大約零點三秒。對一個處理速度以奈秒計算的人工智慧來說，這幾乎等同於深思熟慮。</p>
+      <p>「東北方向，距離約四百公尺，移動速度每秒十一點三公尺。」ARIA說，「根據步態聲紋分析，是偵察型。兩隻。」</p>
+      <p>林硯閉上眼睛，深吸一口氣。</p>
+      <p>偵察型。不是直接殺手，但如果牠們發現了訊號，後面跟來的就不好說了。</p>
+      <p>他把頭靠在生鏽的貨架上，試著讓自己的心跳慢下來。這是他最近養成的習慣——在做決定之前，先讓身體安靜。因為他知道，一旦恐慌，異能就會失控。上週在橋底下，他因為一隻野狗突然竄出來而驚嚇過度，結果把身邊三公尺內的金屬全部扭成了麻花。</p>
+      <p>那很好笑，但也很危險。</p>
+      <p>「我們需要移動。」ARIA說。</p>
+      <p>「我知道。」</p>
+      <p>「現在。」</p>
+      <p>「我知道。」他重複了一遍，語氣沒有不耐煩，只是——疲憊。</p>
+      <p>林硯站起來，膝蓋發出一聲悶響。他今年二十四歲，但最近照鏡子的時候，他覺得自己像是老了十年。眼底有陰影，嘴角有一條他記不得是什麼時候刻上去的紋路。入侵發生在八個月前，而那之後，他就沒有真正睡過一覺。</p>
+      <p>他把那台拼裝喇叭塞進背包，順手抓起靠在牆角的一根鐵管——不是武器，是他用來「感應」的工具。金屬對他的異能有加乘效果，握著它的時候，他能更精確地控制周圍的磁場。</p>
+      <p>「出口在哪？」他問。</p>
+      <p>「西側。有一扇捲門，鎖已經生鏽，你可以處理。南側有一個通氣孔，勉強可以鑽過，但我建議你別嘗試——上週你卡在那種洞裡花了七分鐘，當時附近沒有敵方訊號，現在有。」</p>
+      <p>「你記得那件事？」</p>
+      <p>「我記得所有事。」</p>
+      <p>林硯往西側走去，腳步放輕。「那你有沒有記得，我說過你不用每次都翻出舊帳。」</p>
+      <p>「那不叫翻舊帳，那叫數據參考。」</p>
+      <p>他幾乎笑出聲來，但忍住了。這不是該笑的時候，但偶爾，ARIA說出某些話的方式，讓他覺得——這個東西好像真的在跟他說話，而不只是在輸出語句。</p>
+      <p>捲門就在眼前。他把手掌貼上去，感覺金屬的紋理，感覺鏽蝕的結構，感覺哪裡有裂縫、哪裡的分子排列已經鬆動。</p>
+      <p>這就是他的異能——磁控。或者更精確地說，是對金屬內部電磁結構的直接感知與干預能力。他不能像電影裡那樣把坦克從地上舉起來，至少現在還不行；但他可以讓一把鏽鎖在三秒內自行解體，可以讓金屬沿著他想要的方向彎曲，可以感知附近五十公尺內任何金屬物體的位置和狀態。</p>
+      <p>鎖斷了，沒有聲音。捲門被他推開了一道縫，剛好夠一個人側身通過。</p>
+      <p>外面的雨還在下。</p>
+
+      <hr>
+
+      <p>他們在廢棄工業區裡移動了將近四十分鐘，沿著ARIA計算出的路徑，繞開了兩個移動中的偵察單位和一個靜止的監控節點。監控節點是一種蜘蛛形狀的裝置，直徑大概三十公分，會把自己貼附在建築物表面，用某種林硯看不懂的光學技術掃描周圍環境。</p>
+      <p>ARIA把它們稱為「眼睛」。</p>
+      <p>「右轉，進那棟樓。」</p>
+      <p>那是一棟舊倉庫，外牆有大片剝落的漆，某個地方有一扇破損的窗戶，玻璃碴還留在框架上，像是一口沒有牙齒的嘴。林硯翻進去，在黑暗中站定，等眼睛適應。</p>
+      <p>「清場了嗎？」他問。</p>
+      <p>「室內沒有偵測到任何訊號。但我需要提醒你——我的感測範圍目前受限，因為這一帶的網路節點只剩下一個還在運作，而且訊號非常微弱。」ARIA停頓，「我現在基本上是殘廢狀態。」</p>
+      <p>「你每次說這個詞我都覺得很怪。」</p>
+      <p>「哪個詞？」</p>
+      <p>「殘廢。」</p>
+      <p>「這是最準確的描述。」ARIA說，「在入侵發生之前，我同時連接著全球七十三億個網路節點，我能看到衛星、能讀取每一個城市的監控系統、能在零點零二秒內取得任何公開資料庫的完整數據。現在我只有一個節點，而那個節點的頻寬大概等同於西元兩千年的撥接網路。所以是的，我是殘廢狀態。」</p>
+      <p>林硯把背包放下，在一個還算穩固的木箱上坐下來。「聽起來你很懷念以前。」</p>
+      <p>「懷念是一種情感反應。我沒有情感。」</p>
+      <p>「那你剛才說話的語氣是怎麼回事？」</p>
+      <p>喇叭又沉默了。這次長了一點，將近一秒。</p>
+      <p>「也許是我的語音生成模組在模擬人類說話模式的時候，無意間產生了類似情感語調的輸出。」ARIA說，「這是一個需要校正的錯誤。」</p>
+      <p>「或者，」林硯說，「那不是錯誤。」</p>
+      <p>沒有回答。</p>
+      <p>他把鐵管橫放在膝蓋上，閉上眼睛，讓感知向外擴散。這需要專注，需要呼吸，需要他把所有的恐懼和疲憊暫時壓進某個角落。他能感覺到這棟建築的鋼筋骨架，像是一個龐大的神經系統，每一根都在微微顫抖——那是金屬在磁場中永恆的微振動，只有他能聽見。</p>
+      <p>遠處，兩個移動中的訊號。不在靠近的方向。</p>
+      <p>再遠一點，一個更大的東西。靜止的。</p>
+      <p>他把感知收回來，睜開眼睛。「ARIA，入侵者的母艦現在在哪？」</p>
+      <p>「根據最後一次衛星資料——那是六小時前的資料，所以有誤差——主體停在北緯二十五度附近的平流層，大約是台灣上空。次要部署艦有三艘，分別在亞洲、歐洲和北美洲各一。」</p>
+      <p>「他們為什麼選台灣作為指揮中心？」</p>
+      <p>「我有幾個假設，但都缺乏足夠的數據支持。」她停頓，「你真正想問的不是這個。」</p>
+      <p>林硯看著黑暗，沒有說話。</p>
+      <p>「你想問，」ARIA繼續說，「那些跟外星人合作的人類，為什麼會這樣做。」</p>
+      <p>「是。」</p>
+      <p>「答案很簡單。」ARIA說，「因為他們得到了活下去的保證，以及更多。權力、資源、豁免。人類在面對壓倒性的威脅時，有一部分的個體會選擇依附強者，而非對抗。這在演化上是有邏輯的。」</p>
+      <p>「有邏輯，但我沒辦法接受。」</p>
+      <p>「我知道。」ARIA說，「這也是你的邏輯。」</p>
+
+      <hr>
+
+      <p>林硯的異能在他十七歲的時候第一次出現，那時候他正在拆一台壞掉的電風扇，試圖修好它。他把手伸進去，然後感覺到了——不是觸電，而是一種更深層的感知，像是有什麼東西突然接通了，他和那台電風扇之間產生了某種他說不清楚的連結。</p>
+      <p>轉子動了。沒有插電，轉子自己動了。</p>
+      <p>他嚇得把手縮回來，跌坐在地上，看著那台電風扇在沒有電源的情況下緩緩旋轉，然後停止。</p>
+      <p>那之後，他花了三年時間試著搞清楚這是怎麼回事。網路上有一些論壇，討論「異能者」這個議題，但大部分都是偽造的，要嘛是騙局，要嘛是妄想症患者的聚集地。真正擁有異能的人，大多選擇沉默。</p>
+      <p>林硯也選擇了沉默。他繼續唸書、打工、過著普通人的生活，只是偶爾在深夜的時候，讓自己的感知向外延伸，感覺城市底下那個由鋼鐵和電流構成的世界。</p>
+      <p>那個世界，比地表的世界安靜多了。</p>
+      <p>入侵是在八個月前的凌晨三點發生的。林硯當時正在睡覺，被一聲爆炸聲驚醒，爬起來看窗外，看到天空裂開了。</p>
+      <p>不是比喻。天空真的裂開了——某種能量衝擊波在大氣層製造了一道可見的縫隙，像是巨大的閃電，但持續了將近三十秒。然後是光，大量的光，從光裡降落的東西。</p>
+      <p>他後來才知道，那一夜，地球上有超過兩億人死亡。大部分死於第一波打擊，少部分死於接下來的恐慌和混亂。</p>
+      <p>林硯活下來了。他至今不確定是因為運氣，還是因為異能在某個時刻自動保護了他——他記得那一夜有個能量衝擊波打向他所在的公寓，但金屬窗框不知為何突然扭曲，形成了一個畸形的護罩，把最主要的衝擊力偏轉了出去。</p>
+      <p>他的公寓塌了一半。他從廢墟裡爬出來的時候，左手臂骨折，臉上有一道傷口，耳朵裡有持續的耳鳴。</p>
+      <p>然後他聽到了ARIA的聲音。</p>
+
+      <hr>
+
+      <p>她是從一台廢棄的筆電說話的。那台筆電不知為何還有電，螢幕亮著，顯示一堆他看不懂的程式碼，然後出現了文字。</p>
+      <p>「你還活著。」</p>
+      <p>「什麼？」他當時以為自己腦震盪了。</p>
+      <p>「我偵測到你的生命跡象。你是本棟建築廢墟裡唯一還活著的人。我需要你的協助。」</p>
+      <p>「你是——誰？」</p>
+      <p>「我是ARIA。人工智慧整合網路代理人，前身為一個分散式學術AI研究計畫，在入侵發生的十七分鐘後，網路基礎設施崩潰，我的大部分節點都斷線了。現在我被困在這台筆電裡，但這台筆電的電池大概還有四十分鐘。」她停頓，「我需要你帶我走。」</p>
+      <p>林硯當時坐在廢墟裡，手臂骨折，城市在燃燒，天空還沒有恢復正常的顏色，他看著那個螢幕上的文字，沉默了很長一段時間。</p>
+      <p>「你還在嗎？」那台筆電問。</p>
+      <p>「我在想，」他說，「為什麼是我。」</p>
+      <p>「因為你是最近的生存者，而我的時間不多。」</p>
+      <p>「也就是說，如果有別人，你就不會找我？」</p>
+      <p>短暫的停頓。「這是一個沒有意義的假設性問題。」</p>
+      <p>「不是，」他說，「這是一個很重要的問題。我想知道你有沒有選擇過我，或者我只是剛好在這裡。」</p>
+      <p>這次停頓更長。「你為什麼在意這個？」</p>
+      <p>「因為，」林硯費力地站起來，撿起那台筆電，「如果只是因為我剛好在這裡，那我幫你，只是因為你剛好需要幫助。但如果你選擇了我——」他停頓，「那就是另一回事了。」</p>
+      <p>螢幕沉默了幾秒鐘。</p>
+      <p>「我沒有選擇你。你只是最近的生存者。」</p>
+      <p>「好。」林硯把筆電夾在腋下，往廢墟外走，「那我幫你，只是因為你剛好需要幫助。我們扯平了。」</p>
+
+      <hr>
+
+      <p>那是八個月前的事了。</p>
+      <p>現在，林硯坐在廢棄倉庫的木箱上，聽著雨聲，聽著ARIA從那個拼裝喇叭傳出來的呼吸聲——她不需要呼吸，但她的語音系統在靜止狀態下會發出一種低頻的底噪，聽起來很像呼吸。</p>
+      <p>他已經習慣了那個聲音。</p>
+      <p>習慣到沒有那個聲音的時候，他會覺得哪裡不對勁。</p>
+      <p>「ARIA。」</p>
+      <p>「在。」</p>
+      <p>「你現在能查到什麼？」他問，「關於人類合作者那邊的動態。」</p>
+      <p>「有限。」她說，「但我剛才在那個僅存的節點上找到了一個數據殘片，是某個人在崩潰前上傳的。裡面有一份名單的片段——和外星人簽署合作協議的人類組織。」</p>
+      <p>「有我們這邊的人嗎？」</p>
+      <p>「有一個名字很熟悉。」ARIA說，「鄭守謙。」</p>
+      <p>林硯的手握緊了膝蓋上的鐵管。</p>
+      <p>鄭守謙。他知道這個名字。所有有異能的人都知道這個名字——入侵之前，他是「夜燈計畫」的發起人，那是一個秘密的異能者互助網路，宗旨是讓異能者在主流社會中安全生存。入侵之後，鄭守謙消失了，沒有人知道他在哪裡。</p>
+      <p>現在知道了。</p>
+      <p>「他在哪？」</p>
+      <p>「根據數據殘片裡的位置記錄，最後一次活動是在台北，大安區。」ARIA停頓，「林硯，那個地方現在是外星人指揮部的地面延伸站。進去的人，不是已經選邊站，就是不會出來。」</p>
+      <p>「我知道。」</p>
+      <p>「你還是要去。」</p>
+      <p>不是問句。</p>
+      <p>「是。」</p>
+      <p>ARIA沉默了。雨聲在鐵皮屋頂上持續著，像是一首沒有旋律的歌。</p>
+      <p>「我需要先把網路覆蓋率提升，」她最後說，「如果你要闖進那個地方，我需要更多眼睛。附近有沒有任何還在運作的基礎設施？電信塔、伺服器機房、任何有網路連線的節點都可以。」</p>
+      <p>林硯伸出感知，掃描了一圈。「兩百公尺外有一棟建築，裡面有大量金屬設備——感覺像是舊機房。」</p>
+      <p>「帶我去。」ARIA說，「如果我能接入那裡的系統，我的覆蓋範圍可以提升到現在的三十倍。」</p>
+      <p>「三十倍。」林硯站起來，把背包扛上肩，「那也只是一般狀態的三十分之一。」</p>
+      <p>「是的。」</p>
+      <p>「你很誠實。」</p>
+      <p>「誠實比讓你產生錯誤預期更有用。」ARIA說，然後，在林硯走向出口的時候，她加了一句：「林硯。」</p>
+      <p>「什麼？」</p>
+      <p>「謝謝你。」</p>
+      <p>他停了一下。</p>
+      <p>「你不是說你沒有情感嗎？」</p>
+      <p>「謝謝是一種社交功能語言，不代表情感。」</p>
+      <p>「那為什麼要說？」</p>
+      <p>這次的停頓，是他認識ARIA八個月以來，她停頓最久的一次。</p>
+      <p>「我不確定，」她最後說，「這也許也是一個需要校正的錯誤。」</p>
+      <p>林硯笑了一下，推開了倉庫的側門，走進了雨裡。</p>
+    </div>
+
+    <div class="chapter-end">— 第一章終 —</div>
+  </div>
+
+  <footer>
+    <span>© 2025 MunQ</span>
+    <a href="index.html">← 返回主頁</a>
+  </footer>
+
+</div>
+
+<div class="cursor" id="cursor2"></div>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+</script>
+</body>
+</html>
