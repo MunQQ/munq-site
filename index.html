@@ -251,8 +251,8 @@ document.getElementById('nonsenseText').textContent = nonsenses[dayIdx];
 // ── Guestbook — JSONBin.io shared storage ────
 // 使用免費的 JSONBin.io 讓所有訪客共用同一份留言
 // BIN_ID 和 API_KEY 需要你在 jsonbin.io 免費註冊後填入
-const BIN_ID = 'FILL_IN_BIN_ID';
-const API_KEY = 'FILL_IN_API_KEY';
+const BIN_ID = '69cdeca9aaba882197b880bf';
+const API_KEY = '$2a$10$60r0LgVUY09VJ9dpj8BtdO2KWCG6GZufPHza7Zr8dUY7rxszexRE.';
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const PER_PAGE = 10;
 let allMessages = [];
@@ -268,7 +268,7 @@ function esc(s) {
 }
 
 async function loadMessages() {
-  if (BIN_ID === 'FILL_IN_BIN_ID') {
+  if (false) {
     document.getElementById('messageList').innerHTML =
       '<div class="empty-state">留言功能設定中，<br>很快就會開放。</div>';
     return;
@@ -335,7 +335,7 @@ function changePage(dir) {
 }
 
 async function submitMessage() {
-  if (BIN_ID === 'FILL_IN_BIN_ID') {
+  if (false) {
     showNotif('留言功能設定中，敬請期待 ✦');
     return;
   }
