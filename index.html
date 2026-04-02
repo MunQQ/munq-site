@@ -1,82 +1,387 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.5">
-  <style type="text/css">
-    body {background-color: #f2f0eb}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #141413; -webkit-text-stroke: #141413; background-color: #141413; min-height: 16.0px}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 52.0px 'Helvetica Neue'; color: #141413; -webkit-text-stroke: #141413}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #88847d; -webkit-text-stroke: #88847d}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px 'PingFang TC'; color: #88847d; -webkit-text-stroke: #88847d}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 22.0px 'Helvetica Neue'; color: #141413; -webkit-text-stroke: #141413}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px 'Helvetica Neue'; color: #88847d; -webkit-text-stroke: #88847d}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 20.0px 'PingFang TC'; color: #141413; -webkit-text-stroke: #141413}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'PingFang TC'; color: #88847d; -webkit-text-stroke: #88847d}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #88847d; -webkit-text-stroke: #88847d}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 24.0px 'PingFang TC'; color: #141413; -webkit-text-stroke: #141413}
-    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #141413; -webkit-text-stroke: #141413}
-    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 20.0px 'Helvetica Neue'; color: #141413; -webkit-text-stroke: #141413}
-    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px 'Helvetica Neue'; color: #f2f0eb; -webkit-text-stroke: #f2f0eb}
-    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141413; -webkit-text-stroke: #141413; background-color: #f9f9f6; min-height: 15.0px}
-    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'PingFang TC'; color: #141413; -webkit-text-stroke: #141413}
-    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px 'PingFang TC'; color: #88847d; -webkit-text-stroke: #88847d}
-    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #f2f0eb; -webkit-text-stroke: #f2f0eb; background-color: #141413; min-height: 13.0px}
-    span.s1 {font-kerning: none}
-    span.s2 {font-kerning: none; color: #88847d; -webkit-text-stroke: 0px #88847d}
-    span.s3 {font-kerning: none; background-color: #f9f9f6}
-    span.s4 {font: 20.0px '.PingFang UI TC'; font-kerning: none}
-    span.s5 {font: 20.0px 'Helvetica Neue'; font-kerning: none}
-    span.s6 {font: 12.0px 'Helvetica Neue'; font-kerning: none}
-    span.s7 {font: 12.0px '.CJK Symbols Fallback TC'; font-kerning: none}
-    span.s8 {font: 11.0px 'Helvetica Neue'; font-kerning: none; color: #88847d; background-color: transparent; -webkit-text-stroke: 0px #88847d}
-    span.s9 {font: 24.0px 'PingFang TC'; font-kerning: none; color: #141413; -webkit-text-stroke: 0px #141413}
-    span.s10 {font: 10.0px 'Helvetica Neue'; font-kerning: none}
-    span.s11 {font: 10.0px '.CJK Symbols Fallback TC'; font-kerning: none}
-    span.s12 {font: 12.0px 'PingFang TC'; font-kerning: none}
-    span.s13 {font: 11.0px 'PingFang TC'; font-kerning: none; background-color: #f9f9f6}
-    span.s14 {font: 11.0px 'Helvetica Neue'; font-kerning: none}
-    span.s15 {font: 10.0px 'PingFang TC'; font-kerning: none; background-color: #f9f9f6}
-    span.s16 {font: 13.0px 'Helvetica Neue'; font-kerning: none; color: #141413; -webkit-text-stroke: 0px #141413}
-    span.s17 {font: 10.0px 'Zapf Dingbats'; font-kerning: none; background-color: #141413}
-    span.s18 {font-kerning: none; background-color: #141413}
-    span.s19 {font: 10.0px 'PingFang TC'; font-kerning: none; background-color: #141413}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MunQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F3EF; --ink: #1A1A18; --muted: #9A9690;
+    --accent: #C8B89A; --line: #E2DFDA; --card: #FAFAF8;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    line-height: 1.7; min-height: 100vh; cursor: none;
+  }
+  .cursor {
+    position: fixed; width: 8px; height: 8px;
+    background: var(--ink); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor.hover { transform: translate(-50%, -50%) scale(3); opacity: 0.3; }
+  .page { max-width: 680px; margin: 0 auto; padding: 80px 32px 120px; }
+  header { margin-bottom: 80px; opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 52px; letter-spacing: -1px; line-height: 1; margin-bottom: 16px; }
+  .logo em { font-style: italic; color: var(--muted); }
+  .tagline { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .welcome-banner {
+    border: 1px solid var(--line); border-left: 3px solid var(--ink);
+    padding: 20px 24px; margin-bottom: 64px; background: var(--card);
+    opacity: 0; animation: fadeUp 0.8s ease 0.15s forwards;
+  }
+  .welcome-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 8px; }
+  .welcome-text { font-family: 'DM Serif Display', serif; font-size: 22px; line-height: 1.4; }
+  section { margin-bottom: 64px; opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.3s; }
+  section:nth-child(5) { animation-delay: 0.35s; }
+  section:nth-child(6) { animation-delay: 0.4s; }
+  section:nth-child(7) { animation-delay: 0.45s; }
+  .section-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .about-text { font-family: 'DM Serif Display', serif; font-size: 20px; line-height: 1.6; }
+  .about-sub { margin-top: 16px; color: var(--muted); font-size: 12px; }
+  .social-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .social-link {
+    display: inline-block; padding: 8px 16px; font-size: 11px;
+    letter-spacing: 0.06em; border: 1px solid var(--line);
+    color: var(--muted); text-decoration: none;
+    transition: border-color 0.2s, color 0.2s; cursor: none;
+  }
+  .social-link:hover { border-color: var(--ink); color: var(--ink); }
+  /* Novel */
+  .novel-entry {
+    display: block; text-decoration: none; color: inherit;
+    border: 1px solid var(--line); padding: 28px 32px;
+    background: var(--card); transition: border-color 0.2s; cursor: none;
+  }
+  .novel-entry:hover { border-color: var(--ink); }
+  .novel-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 6px; }
+  .novel-meta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 16px; }
+  .novel-desc { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .novel-arrow { font-size: 11px; letter-spacing: 0.06em; color: var(--ink); }
+  /* Nonsense */
+  .nonsense-box {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    padding: 24px; background: var(--card);
+  }
+  .nonsense-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px; }
+  .nonsense-text { font-family: 'DM Serif Display', serif; font-size: 20px; line-height: 1.5; font-style: italic; }
+  /* Guestbook */
+  .millionaire-badge {
+    display: inline-block; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.1em; background: var(--ink); color: var(--bg);
+    padding: 3px 10px; margin-bottom: 20px;
+  }
+  .guestbook-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  input, textarea {
+    font-family: 'DM Mono', monospace; font-size: 12px; padding: 12px 16px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    outline: none; resize: none; width: 100%; transition: border-color 0.2s;
+  }
+  input::placeholder, textarea::placeholder { color: var(--muted); }
+  input:focus, textarea:focus { border-color: var(--accent); }
+  .btn {
+    display: inline-block; padding: 10px 20px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px solid var(--ink); background: transparent;
+    color: var(--ink); cursor: none;
+    transition: background 0.2s, color 0.2s; align-self: flex-start;
+  }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn-ghost { border-color: var(--line); color: var(--muted); }
+  .btn-ghost:hover { background: var(--line); color: var(--ink); }
+  .messages { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+  .message-card { border: 1px solid var(--line); padding: 20px; background: var(--card); animation: fadeUp 0.4s ease; }
+  .message-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .message-name { font-size: 12px; letter-spacing: 0.04em; }
+  .message-time { font-size: 10px; color: var(--muted); }
+  .message-badge { font-size: 10px; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 6px; }
+  .message-text { color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 8px; }
+  .empty-state { text-align: center; color: var(--muted); padding: 40px; font-size: 12px; border: 1px dashed var(--line); }
+  .loading-state { text-align: center; color: var(--muted); padding: 32px; font-size: 12px; }
+  /* Pagination */
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px; }
+  .page-info { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+  footer {
+    margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 11px;
+    display: flex; justify-content: space-between; align-items: center;
+    opacity: 0; animation: fadeUp 0.8s ease 0.65s forwards;
+  }
+  .notif {
+    position: fixed; bottom: 32px; right: 32px;
+    background: var(--ink); color: var(--bg);
+    padding: 12px 20px; font-size: 11px; letter-spacing: 0.06em;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none; z-index: 100; max-width: 260px; line-height: 1.5;
+  }
+  .notif.show { opacity: 1; transform: translateY(0); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    .logo { font-size: 40px; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1">Mun</span><span class="s2">Q</span></p>
-<p class="p3"><span class="s1">MUSIC PRODUCER</span></p>
-<p class="p4"><span class="s3">你來了</span></p>
-<p class="p5"><span class="s3">...</span></p>
-<p class="p6"><span class="s1">ABOUT</span></p>
-<p class="p7"><span class="s4">用聲音說話，</span><span class="s5"><br>
-</span><span class="s1">用音樂記錄那些說不出口的事。</span></p>
-<p class="p8"><span class="s1">學習中 - 作曲</span><span class="s6"> </span><span class="s7">·</span><span class="s6"> </span><span class="s1">編曲</span><span class="s6"> </span><span class="s7">·</span><span class="s6"> </span><span class="s1">作詞</span><span class="s6"> </span><span class="s7">·</span><span class="s6"> </span><span class="s1">錄音</span><span class="s6"> </span><span class="s7">·</span><span class="s6"> </span><span class="s1">混音</span></p>
-<p class="p9"><span class="s1"><a href="https://www.youtube.com/@im_munq">YouTube<span class="s8"></span></a></span></p>
-<p class="p9"><span class="s1"><a href="https://www.tiktok.com/@im_munq">TikTok<span class="s8"></span></a></span></p>
-<p class="p9"><span class="s1"><a href="https://www.instagram.com/im_munq">Instagram<span class="s8"></span></a></span></p>
-<p class="p9"><span class="s1"><a href="https://www.facebook.com/immunq">Facebook<span class="s8"></span></a></span></p>
-<p class="p9"><span class="s1"><a href="https://www.threads.net/@im_munq">Threads<span class="s8"></span></a></span></p>
-<p class="p9"><span class="s1"><a href="https://x.com/im_munq">X<span class="s8"></span></a></span></p>
-<p class="p9"><span class="s1"><a href="https://soundcloud.com/im_munq">SoundCloud<span class="s8"></span></a></span></p>
-<p class="p4"><span class="s1">小說</span></p>
-<p class="p10"><span class="s3"><a href="file:///Users/munq/Desktop/munq-site/novel.html">裂網之際<span class="s9"></span></a></span></p>
-<p class="p4"><span class="s3"><a href="file:///Users/munq/Desktop/munq-site/novel.html">科幻<span class="s10"> </span><span class="s11">·</span><span class="s10"> </span><span class="s1">連載中</span></a></span></p>
-<p class="p8"><span class="s3"><a href="file:///Users/munq/Desktop/munq-site/novel.html">入侵發生在八個月前的凌晨三點。林硯從廢墟裡爬出來，遇見了一個被困在筆電裡的<span class="s6"> AI</span><span class="s12">。</span></a></span></p>
-<p class="p11"><span class="s13"><a href="file:///Users/munq/Desktop/munq-site/novel.html">閱讀<span class="s14"> →</span></a></span></p>
-<p class="p4"><span class="s1">今日廢話</span></p>
-<p class="p6"><span class="s3">MUNQ </span><span class="s15">說</span></p>
-<p class="p12"><span class="s3">—</span></p>
-<p class="p13"><span class="s2">GUESTBOOK</span><span class="s16"> </span><span class="s17">✦</span><span class="s18"> </span><span class="s19">留言的人都是百萬富翁</span><span class="s18"> </span><span class="s17">✦</span></p>
-<p class="p14"><span class="s1"></span><br></p>
-<p class="p15"><span class="s1">留下來</span></p>
-<p class="p16"><span class="s1">載入留言中</span><span class="s6">...</span></p>
-<p class="p9"><span class="s1">© 2026 MunQ</span></p>
-<p class="p9"><span class="s1">—</span></p>
-<p class="p17"><span class="s1"></span><br></p>
+<div class="cursor" id="cursor"></div>
+<div class="page">
+
+  <header>
+    <div class="logo">Mun<em>Q</em></div>
+    <div class="tagline">Singer · Songwriter · Music Producer</div>
+  </header>
+
+  <div class="welcome-banner">
+    <div class="welcome-label">你來了</div>
+    <div class="welcome-text" id="welcomeText">...</div>
+  </div>
+
+  <section>
+    <div class="section-label">About</div>
+    <p class="about-text">用聲音說話，<br>用音樂記錄那些說不出口的事。</p>
+    <p class="about-sub">作曲 · 編曲 · 作詞 · 錄音 · 混音</p>
+    <div class="social-grid">
+      <a class="social-link" href="https://www.youtube.com/@im_munq" target="_blank">YouTube</a>
+      <a class="social-link" href="https://www.tiktok.com/@im_munq" target="_blank">TikTok</a>
+      <a class="social-link" href="https://www.instagram.com/im_munq" target="_blank">Instagram</a>
+      <a class="social-link" href="https://www.facebook.com/immunq" target="_blank">Facebook</a>
+      <a class="social-link" href="https://www.threads.net/@im_munq" target="_blank">Threads</a>
+      <a class="social-link" href="https://x.com/im_munq" target="_blank">X</a>
+      <a class="social-link" href="https://soundcloud.com/im_munq" target="_blank">SoundCloud</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">小說</div>
+    <a href="novel.html" class="novel-entry">
+      <div class="novel-title">裂網之際</div>
+      <div class="novel-meta">科幻 · 連載中</div>
+      <div class="novel-desc">入侵發生在八個月前的凌晨三點。林硯從廢墟裡爬出來，遇見了一個被困在筆電裡的 AI。</div>
+      <div class="novel-arrow">閱讀 →</div>
+    </a>
+  </section>
+
+  <section>
+    <div class="section-label">今日廢話</div>
+    <div class="nonsense-box">
+      <div class="nonsense-label">MunQ 說</div>
+      <div class="nonsense-text" id="nonsenseText">—</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Guestbook</div>
+    <div class="millionaire-badge">✦ 留言者皆為百萬富翁 ✦</div>
+    <div class="guestbook-form">
+      <input type="text" id="gName" placeholder="你的名字（可以匿名，反正你有錢）" maxlength="30">
+      <textarea id="gMessage" rows="3" placeholder="想說什麼都行，反正你是百萬富翁..."></textarea>
+      <button class="btn" onclick="submitMessage()">留下來</button>
+    </div>
+    <div class="messages" id="messageList"><div class="loading-state">載入留言中...</div></div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+
+  <footer>
+    <span>© 2025 MunQ</span>
+    <span id="visitorCount">—</span>
+  </footer>
+</div>
+<div class="notif" id="notif"></div>
+
+<script>
+// ── Cursor ──────────────────────────────────
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('button,input,textarea,a').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// ── Welcome ─────────────────────────────────
+const welcomes = [
+  '你來了，我假裝不緊張。',
+  '歡迎，這裡沒什麼，但你來了就有了。',
+  '嗯⋯⋯你真的點進來了。',
+  '恭喜你找到一個還沒紅的音樂人。',
+  '進來了就別想那麼多了。',
+  '這裡住著一個還在努力的人，就是我。',
+  '別緊張，我比你還緊張。',
+  '歡迎，我剛好也不知道要說什麼。',
+  '謝謝你願意點進一個普通人的頁面。',
+];
+document.getElementById('welcomeText').textContent =
+  welcomes[Math.floor(Math.random() * welcomes.length)];
+
+// ── Daily Nonsense ───────────────────────────
+const nonsenses = [
+  '做音樂就是把腦內的雜訊整理成別人也能感受的雜訊。',
+  '今天沒有靈感，明天也不一定有，但我還是坐下來了。',
+  '有時候覺得自己寫得很爛，有時候覺得還好，差別只在於當天睡眠夠不夠。',
+  '一首歌如果你自己都感動不了，就先不要讓別人聽。',
+  '進步是很安靜的事，吵的都是焦慮。',
+  '人生沒有背景音樂，所以我來負責寫。',
+  '我不是天才，但我在練。',
+  '有些話說不出口，所以我寫成歌。你懂那種感覺嗎？',
+  '創作就是一直跟自己說「再一次」。',
+  '聽說堅持下去的人最後都會贏，我還在驗證這件事。',
+];
+const d = new Date();
+const dayIdx = (d.getFullYear() * 365 + d.getMonth() * 31 + d.getDate()) % nonsenses.length;
+document.getElementById('nonsenseText').textContent = nonsenses[dayIdx];
+
+// ── Guestbook — JSONBin.io shared storage ────
+// 使用免費的 JSONBin.io 讓所有訪客共用同一份留言
+// BIN_ID 和 API_KEY 需要你在 jsonbin.io 免費註冊後填入
+const BIN_ID = '69cdeca9aaba882197b880bf';
+const API_KEY = '$2a$10$60r0LgVUY09VJ9dpj8BtdO2KWCG6GZufPHza7Zr8dUY7rxszexRE.';
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const PER_PAGE = 10;
+let allMessages = [];
+let currentPage = 1;
+
+const titles = [
+  '百萬富翁', '千萬富豪', '億萬大亨', '財富自由人士', '有錢人本人',
+  '金融界傳奇', '低調富翁', '錢很多的那種人', '富可敵國',
+];
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function loadMessages() {
+  if (false) {
+    document.getElementById('messageList').innerHTML =
+      '<div class="empty-state">留言功能設定中，<br>很快就會開放。</div>';
+    return;
+  }
+  try {
+    const res = await fetch(JSONBIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY }
+    });
+    const data = await res.json();
+    allMessages = data.record.messages || [];
+    currentPage = 1;
+    renderPage();
+  } catch {
+    document.getElementById('messageList').innerHTML =
+      '<div class="empty-state">留言暫時無法載入，請稍後再試。</div>';
+  }
+}
+
+function renderPage() {
+  const list = document.getElementById('messageList');
+  const pagDiv = document.getElementById('pagination');
+
+  if (!allMessages.length) {
+    list.innerHTML = '<div class="empty-state">還沒有百萬富翁來過，<br>成為第一個吧。</div>';
+    pagDiv.innerHTML = '';
+    return;
+  }
+
+  const sorted = allMessages.slice().reverse();
+  const totalPages = Math.ceil(sorted.length / PER_PAGE);
+  const start = (currentPage - 1) * PER_PAGE;
+  const pageItems = sorted.slice(start, start + PER_PAGE);
+
+  list.innerHTML = pageItems.map(m => `
+    <div class="message-card">
+      <div class="message-header">
+        <span class="message-name">${esc(m.name)}</span>
+        <span class="message-time">${esc(m.time)}</span>
+      </div>
+      <div class="message-badge">✦ ${esc(m.title)} ✦</div>
+      ${m.message ? `<p class="message-text">${esc(m.message)}</p>` : ''}
+    </div>
+  `).join('');
+
+  // Pagination
+  if (totalPages <= 1) { pagDiv.innerHTML = ''; return; }
+  pagDiv.innerHTML = `
+    <button class="btn btn-ghost" onclick="changePage(-1)" ${currentPage === 1 ? 'disabled style="opacity:0.3"' : ''}>← 上一頁</button>
+    <span class="page-info">${currentPage} / ${totalPages}</span>
+    <button class="btn btn-ghost" onclick="changePage(1)" ${currentPage === totalPages ? 'disabled style="opacity:0.3"' : ''}>下一頁 →</button>
+  `;
+  // re-bind cursor hover on new buttons
+  pagDiv.querySelectorAll('button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+function changePage(dir) {
+  const totalPages = Math.ceil(allMessages.length / PER_PAGE);
+  currentPage = Math.max(1, Math.min(totalPages, currentPage + dir));
+  renderPage();
+  document.getElementById('messageList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function submitMessage() {
+  if (false) {
+    showNotif('留言功能設定中，敬請期待 ✦');
+    return;
+  }
+  const name = document.getElementById('gName').value.trim();
+  const message = document.getElementById('gMessage').value.trim();
+  if (!name && !message) { showNotif('隨便說點什麼吧，富翁'); return; }
+
+  const now = new Date();
+  const time = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const title = titles[Math.floor(Math.random() * titles.length)];
+  const newMsg = { name: name || '匿名富翁', message, time, title };
+
+  try {
+    allMessages.push(newMsg);
+    await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+      body: JSON.stringify({ messages: allMessages })
+    });
+    document.getElementById('gName').value = '';
+    document.getElementById('gMessage').value = '';
+    currentPage = 1;
+    renderPage();
+    showNotif('你的財富已登記在案 💰');
+  } catch {
+    allMessages.pop();
+    showNotif('留言失敗，請稍後再試');
+  }
+}
+
+// ── Visitor Count ────────────────────────────
+fetch('https://api.counterapi.dev/v1/munq-site/visits/up')
+  .then(r => r.json())
+  .then(d => { document.getElementById('visitorCount').textContent = '總造訪次數 ' + d.count.toLocaleString(); })
+  .catch(() => { document.getElementById('visitorCount').textContent = '總造訪次數 —'; });
+
+// ── Notif ─────────────────────────────────────
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  clearTimeout(n._t);
+  n._t = setTimeout(() => n.classList.remove('show'), 2800);
+}
+
+loadMessages();
+</script>
 </body>
 </html>
