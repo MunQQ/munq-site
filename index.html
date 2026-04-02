@@ -136,6 +136,18 @@
     .logo { font-size: 40px; }
     footer { flex-direction: column; gap: 8px; text-align: center; }
   }
+
+  .self-entry {
+    display: block; text-decoration: none; color: inherit;
+    border: 1px solid var(--line); padding: 28px 32px;
+    background: var(--card); transition: border-color 0.2s; cursor: none;
+    margin-top: 0;
+  }
+  .self-entry:hover { border-color: var(--ink); }
+  .self-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 6px; }
+  .self-meta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 16px; }
+  .self-desc { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .self-arrow { font-size: 11px; letter-spacing: 0.06em; color: var(--ink); }
 </style>
 </head>
 <body>
@@ -178,6 +190,16 @@
   </section>
 
   <section>
+    <div class="section-label">認識自己</div>
+    <a href="self.html" class="self-entry">
+      <div class="self-title">你是誰？</div>
+      <div class="self-meta">8 個問題 · AI 分析</div>
+      <div class="self-desc">你最常在做什麼？你在乎什麼？你想要的是什麼？<br>8 個問題，幫你找到你自己。</div>
+      <div class="self-arrow">開始探索 →</div>
+    </a>
+  </section>
+
+    <section>
     <div class="section-label">今日廢話</div>
     <div class="nonsense-box">
       <div class="nonsense-label">MunQ 說</div>
